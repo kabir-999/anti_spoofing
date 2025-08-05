@@ -124,15 +124,18 @@ def predict():
 def health():
     return jsonify({"status": "healthy", "model_loaded": model is not None})
 
+# Create necessary directories (for local dev; on Render, these usually exist)
+os.makedirs("models", exist_ok=True)
+os.makedirs("templates", exist_ok=True)
+os.makedirs("static", exist_ok=True)
+
+# Load model at module level so it works with both Flask dev server and Gunicorn/Render
+def _init_model_once():
+    global model
+    if model is None:
+        load_model()
+_init_model_once()
+
 if __name__ == '__main__':
-    # Create necessary directories
-    os.makedirs("models", exist_ok=True)
-    os.makedirs("templates", exist_ok=True)
-    os.makedirs("static", exist_ok=True)
-    
-    # Load model
-    load_model()
-    
-    # Run app
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False)
