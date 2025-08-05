@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anti-Spoofing Face Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛡️ Anti-Spoofing Face Detection</h1>
+            <p>Real-time face authenticity verification using AI</p>
+        </header>
+
+        <main>
+            <div class="camera-section" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div class="video-container" style="margin: 0 auto;">
+                    <video id="video" autoplay muted playsinline></video>
+                    <canvas id="canvas" style="display: none;"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <button id="startCamera" class="btn btn-primary">📹 Start Camera</button>
+                    <button id="captureBtn" class="btn btn-success" disabled>📸 Capture & Analyze</button>
+                    <button id="stopCamera" class="btn btn-danger" disabled>⏹️ Stop Camera</button>
+                </div>
+            </div>
+
+            <div class="results-section">
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Analyzing image...</p>
+                </div>
+
+                <div id="results" class="results" style="display: none;">
+                    <div class="result-card">
+                        <h3>Analysis Results</h3>
+                        <div class="result-content">
+                            <div class="prediction">
+                                <span class="label">Prediction:</span>
+                                <span id="predictionText" class="value"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="error" class="error" style="display: none;">
+                    <h3>⚠️ Error</h3>
+                    <p id="errorText"></p>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <div class="info-card">
+                    <h3>ℹ️ How it works</h3>
+                    <ul>
+                        <li>Click "Start Camera" to access your webcam</li>
+                        <li>Position your face in the camera view</li>
+                        <li>Click "Capture & Analyze" to take a photo and analyze it</li>
+                        <li>The AI model will determine if the face is real or fake</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Camera Permission Modal -->
+    <div id="cameraModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Camera Permission Needed</h2>
+            <p>This app needs access to your camera to work. Please allow camera access when prompted by your browser.</p>
+            <button id="modalAllowBtn" class="btn btn-primary">Allow Camera Access</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
